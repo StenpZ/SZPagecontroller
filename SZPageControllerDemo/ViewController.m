@@ -31,10 +31,10 @@
     pageVC.dataSource = self;
     pageVC.delegate = self;
     pageVC.circleSwitchEnabled = NO;
-        pageVC.contentModeController = NO;
-    //    pageVC.switchToLastEnabled = NO;
-    //    pageVC.switchSlideEnabled = NO;
-    //    pageVC.switchTapEnabled = NO;
+    pageVC.contentModeController = NO;
+//    pageVC.switchToLastEnabled = NO;
+//    pageVC.switchSlideEnabled = NO;
+//    pageVC.switchTapEnabled = NO;
     [self.view addSubview:pageVC.view];
     [self addChildViewController:pageVC];
     self.pageController = pageVC;

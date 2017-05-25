@@ -7,7 +7,7 @@
 #导入方法  
 1、支持cocoapods导入  
 
-    pod 'SZPageController', '~> 1.0.1'  
+    pod 'SZPageController'  
     
   如果提示找不到则有以下解决办法（对所有pod库都适用）  
   

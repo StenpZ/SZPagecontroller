@@ -53,8 +53,17 @@
     /*! 注意，View方式或者Controller方式只需要实现一种代理即可
      contentModeController YES 实现Controller相关代理
      contentModeController NO 实现View相关代理*/
+    
+    UIButton *btn = [UIButton buttonWithType:UIButtonTypeContactAdd];
+    btn.frame = CGRectMake(0, 0, 100, 100);
+    btn.center = self.view.center;
+    [btn addTarget:self action:@selector(skip) forControlEvents:UIControlEventTouchUpInside];
+    [self.view addSubview:btn];
 }
 
+- (void)skip {
+    [self.pageController switchToIndex:5 animated:NO];
+}
 
 #pragma mark - SZPageControllerDataSource
 

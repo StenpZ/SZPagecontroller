@@ -44,7 +44,9 @@
 
 @property(nonatomic, readonly) NSInteger nextIndex;
 
+/*! 内部切换控制 能否切换到上一页 */
 @property(nonatomic) BOOL scrollToLastEnabled;
+/*! 内部切换控制 能否切换到下一页 */
 @property(nonatomic) BOOL scrollToNextEnabled;
 
 @end
@@ -388,7 +390,7 @@
                             
                             weakSelf.currentController.view.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                             
-                        }else{
+                        } else {
                             
                             weakSelf.currentController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                         }
@@ -404,7 +406,7 @@
                         
                         self.currentController.view.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                         
-                    }else{
+                    } else {
                         
                         self.currentController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                     }
@@ -428,7 +430,7 @@
                             
                             weakSelf.tempView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                             
-                        }else{
+                        } else {
                             
                             weakSelf.tempView.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                         }
@@ -438,13 +440,13 @@
                         [weakSelf animateSuccess:isSuccess];
                     }];
                     
-                }else{
+                } else  {
                     
                     if (isSuccess) {
                         
                         self.tempView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                         
-                    }else{
+                    } else {
                         
                         self.tempView.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                     }
@@ -452,7 +454,7 @@
                     [self animateSuccess:isSuccess];
                 }
                 
-            }else{ // 右边
+            } else { // 右边
                 
                 if (animated) {
                     
@@ -464,7 +466,7 @@
                             
                             weakSelf.currentView.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                             
-                        }else{
+                        } else {
                             
                             weakSelf.currentView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                         }
@@ -474,13 +476,13 @@
                         [weakSelf animateSuccess:isSuccess];
                     }];
                     
-                }else{
+                } else {
                     
                     if (isSuccess) {
                         
                         self.currentView.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
                         
-                    }else{
+                    } else {
                         
                         self.currentView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
                     }
@@ -543,7 +545,7 @@
             } else {
                 self.currentIndex ++;
             }
-        }else{
+        } else {
             
             [self.tempView removeFromSuperview];
             
@@ -558,63 +560,6 @@
     }
 }
 
-#pragma mark - 设置显示控制器
-
-/**
- *  手动设置显示控制器 无动画
- *
- *  @param controller 设置显示的控制器
- */
-- (void)setController:(UIViewController * _Nonnull)controller {
-    [self setController:controller animated:NO isAbove:YES];
-}
-
-/**
- *  手动设置显示控制器
- *
- *  @param controller 设置显示的控制器
- *  @param animated   是否需要动画
- *  @param isAbove    动画是否从上面显示 YES   从下面显示 NO
- */
-- (void)setController:(UIViewController * _Nonnull)controller animated:(BOOL)animated isAbove:(BOOL)isAbove {
-    if (animated && self.currentController) { // 需要动画 同时有根控制器了
-        
-        // 正在动画
-        if (self.isAnimating) return;
-        
-        self.isAnimating = YES;
-        
-        self.isLeft = isAbove;
-        
-        // 记录
-        self.tempController = controller;
-        
-        // 添加
-        [self addController:controller];
-        
-        // 手势结束
-        [self GestureSuccess:YES animated:YES];
-        
-    } else {
-        
-        // 添加
-        [self addController:controller];
-        
-        // 修改frame
-        controller.view.frame = self.view.bounds;
-        
-        // 当前控制器有值 进行删除
-        if (_currentController) {
-            
-            [_currentController.view removeFromSuperview];
-            
-            [_currentController removeFromParentViewController];
-        }
-        
-        // 赋值记录
-        _currentController = controller;
-    }
-}
 
 /**
  *  添加控制器
@@ -654,62 +599,6 @@
 #pragma mark - 设置显示View
 
 /**
- *  手动设置显示View 无动画
- *
- *  @param currentView 设置显示的View
- */
-- (void)setCurrentView:(UIView * _Nonnull)currentView {
-    [self setCurrentView:currentView animated:NO isAbove:YES];
-}
-
-/**
- *  手动设置显示View
- *
- *  @param currentView 设置显示的View
- *  @param animated    是否需要动画
- *  @param isAbove     动画是否从上面显示 YES   从下面显示 NO
- */
-- (void)setCurrentView:(UIView * _Nonnull)currentView animated:(BOOL)animated isAbove:(BOOL)isAbove {
-    if (animated && self.currentView) { // 需要动画 同时有根View了
-        
-        // 正在动画
-        if (self.isAnimating) { return; }
-        
-        self.isAnimating = YES;
-        
-        self.isLeft = isAbove;
-        
-        // 记录
-        self.tempView = currentView;
-        
-        // 添加
-        [self addView:currentView];
-        
-        // 手势结束
-        [self GestureSuccess:YES animated:YES];
-        
-    }else{
-        
-        // 添加
-        [self addView:currentView];
-        
-        // 修改frame
-        currentView.frame = self.view.bounds;
-        
-        // 当前View有值 进行删除
-        if (_currentView) {
-            
-            [_currentView removeFromSuperview];
-            
-            _currentView = nil;
-        }
-        
-        // 赋值记录
-        _currentView = currentView;
-    }
-}
-
-/**
  *  添加View
  *
  *  @param view 显示View
@@ -723,13 +612,13 @@
             
             view.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
             
-        }else{ // 右边
+        } else { // 右边
             
             if (self.currentView) { // 有值
                 
                 [self.view insertSubview:view belowSubview:self.currentView];
                 
-            }else{ // 没值
+            } else { // 没值
                 
                 [self.view addSubview:view];
             }
@@ -768,9 +657,7 @@
 
 #pragma mark - Method
 - (void)reloadData {
-    if (self.isAnimating) {
-        return;
-    }
+
     if ([self.dataSource respondsToSelector:@selector(numberOfPagesInPageController:)]) {
         _numberOfPages = [self.dataSource numberOfPagesInPageController:self];
         
@@ -797,9 +684,7 @@
 }
 
 - (void)reloadDataToFirst {
-    if (self.isAnimating) {
-        return;
-    }
+
     if ([self.dataSource respondsToSelector:@selector(numberOfPagesInPageController:)]) {
         _numberOfPages = [self.dataSource numberOfPagesInPageController:self];
         
@@ -825,8 +710,34 @@
     // 添加
     [self addController:self.tempController];
     
+    if (self.isAnimating) {
+        __weak SZPageController *weakSelf = self;
+
+        if (self.isLeft) {
+            [UIView animateWithDuration:AnimateDuration animations:^{
+                weakSelf.tempController.view.frame = CGRectMake(0, 0, self.view.width, self.view.height);
+            } completion:^(BOOL finished) {
+                [weakSelf initViewControllerComplented];
+            }];
+        } else {
+            [UIView animateWithDuration:AnimateDuration animations:^{
+                weakSelf.currentController.view.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
+            } completion:^(BOOL finished) {
+                [weakSelf initViewControllerComplented];
+            }];
+        }
+        return;
+    }
     // 修改frame
     self.tempController.view.frame = self.view.bounds;
+    
+    [self initViewControllerComplented];
+
+}
+
+- (void)initViewControllerComplented {
+    self.isAnimating = NO;
+    
     // 当前控制器有值 进行删除
     if (_currentController) {
         
@@ -849,9 +760,33 @@
     // 添加
     [self addView:self.tempView];
     
+    if (self.isAnimating) {
+        __weak SZPageController *weakSelf = self;
+        
+        if (self.isLeft) {
+            [UIView animateWithDuration:AnimateDuration animations:^{
+                weakSelf.tempView.frame = CGRectMake(0, 0, self.view.width, self.view.height);
+            } completion:^(BOOL finished) {
+                [weakSelf initViewComplented];
+            }];
+        } else {
+            [UIView animateWithDuration:AnimateDuration animations:^{
+                weakSelf.currentView.frame = CGRectMake(-self.view.width, 0, self.view.width, self.view.height);
+            } completion:^(BOOL finished) {
+                [weakSelf initViewComplented];
+            }];
+        }
+        return;
+    }
+    
     // 修改frame
     self.tempView.frame = self.view.bounds;
+    [self initViewComplented];
     
+}
+
+- (void)initViewComplented {
+    self.isAnimating = NO;
     // 当前View有值 进行删除
     if (_currentView) {
         
@@ -879,6 +814,11 @@
 }
 
 - (void)switchToIndex:(NSInteger)index animated:(BOOL)animated {
+    if (self.currentIndex == index) {
+        return;
+    }
+    self.isAnimating = animated;
+    self.isLeft = index < self.currentIndex ? YES: NO;
     self.currentIndex = index;
 
     if (self.contentModeController) {
@@ -892,6 +832,11 @@
             [self initView];
         }
     }
+}
+
+- (void)adjustedWhenReadWithCurrentIndex:(NSInteger)currentIndex sumPages:(NSInteger)sumPages {
+    self.numberOfPages = sumPages;
+    self.currentIndex = currentIndex;
 }
 
 #pragma mark - getter/setter

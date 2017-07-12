@@ -18,7 +18,9 @@
   
 2、直接将SZPageController文件下所有文件拖入自己的工程即可。  
 
+# 示例：
+ ![image](https://github.com/StenpZ/SZPagecontroller/blob/master/%E7%A4%BA%E4%BE%8B%E5%9B%BE.gif)
 
-#说明  
+# 说明  
 
 如果在使用过程中发现什么问题可以提issue或者邮件至zhouc520@foxmail.com。

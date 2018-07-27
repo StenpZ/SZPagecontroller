@@ -1,6 +1,9 @@
 # SZPagecontroller
 类似驾考宝典和小说阅读器覆盖翻页的控件
 
+### 注意！！！！！！
+### 该项目不再维护，请参考[SZKit](https://github.com/StenpZ/SZKit)中SZPageView模块
+
 #使用方法类似UITableView  
 详细使用请参照Demo
 

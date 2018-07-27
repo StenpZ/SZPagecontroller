@@ -7,9 +7,15 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DemoModel.h"
 
 @interface TempView : UIView
 
 @property (weak, nonatomic) UILabel *textLabel;
+
+@property(nonatomic, strong) UIButton *answerButton;
+@property(nonatomic, strong) UIView *answerView;
+
+@property(nonatomic, weak) DemoModel *model;
 
 @end

@@ -17,7 +17,9 @@
 @interface ViewController ()<SZPageControllerDataSource, SZPageControllerDelegate>
 
 @property(nonatomic, weak) SZPageController *pageController;
-@property(nonatomic) NSInteger numbers;
+@property(nonatomic, strong) NSArray *dataArray;
+
+@property(nonatomic) NSInteger index;
 
 @end
 
@@ -30,6 +32,7 @@
     SZPageController *pageVC = [[SZPageController alloc] init];
     pageVC.dataSource = self;
     pageVC.delegate = self;
+    pageVC.switchTapEnabled = NO;
     pageVC.circleSwitchEnabled = NO;
     pageVC.contentModeController = NO;
 //    pageVC.switchToLastEnabled = NO;
@@ -38,7 +41,14 @@
     [self.view addSubview:pageVC.view];
     [self addChildViewController:pageVC];
     self.pageController = pageVC;
-    self.numbers = 12;
+    NSMutableArray *arr = [NSMutableArray array];
+    for (NSInteger index = 0; index < 12; index ++) {
+        DemoModel *model = [DemoModel new];
+        model.text = [NSString stringWithFormat:@"第%ld页", index];
+        [arr addObject:model];
+    }
+    
+    self.dataArray = [arr copy];
     [self.pageController reloadData];
 //    [self.pageController setValue:@(100) forKey:@"numberOfPages"];
     
@@ -54,21 +64,42 @@
      contentModeController YES 实现Controller相关代理
      contentModeController NO 实现View相关代理*/
     
-    UIButton *btn = [UIButton buttonWithType:UIButtonTypeContactAdd];
+   { UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
     btn.frame = CGRectMake(0, 0, 100, 100);
+    [btn setTitle:@"跳转到第5页" forState:UIControlStateNormal];
     btn.center = self.view.center;
     [btn addTarget:self action:@selector(skip) forControlEvents:UIControlEventTouchUpInside];
-    [self.view addSubview:btn];
+    [self.view addSubview:btn];}
+    
+    {    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+        btn.frame = CGRectMake(0, CGRectGetHeight(self.view.bounds) - 100, 100, 100);
+        [btn setTitle:@"上一页" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(last) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btn];}
+    
+    {    UIButton *btn = [UIButton buttonWithType:UIButtonTypeSystem];
+        btn.frame = CGRectMake(CGRectGetWidth(self.view.bounds) - 100, CGRectGetHeight(self.view.bounds) - 100, 100, 100);
+        [btn setTitle:@"下一页" forState:UIControlStateNormal];
+        [btn addTarget:self action:@selector(next) forControlEvents:UIControlEventTouchUpInside];
+        [self.view addSubview:btn];}
 }
 
 - (void)skip {
-    [self.pageController switchToIndex:5 animated:NO];
+    [self.pageController switchToIndex:5 animated:YES];
+}
+
+- (void)next {
+    [self.pageController switchToNextAnimated:YES];
+}
+
+- (void)last {
+    [self.pageController switchToLastAnimated:YES];
 }
 
 #pragma mark - SZPageControllerDataSource
 
 - (NSInteger)numberOfPagesInPageController:(SZPageController *)pageController {
-    return self.numbers;
+    return self.dataArray.count;
 }
 
 - (UIViewController *)pageController:(SZPageController *)pageController controllerForIndex:(NSInteger)index {
@@ -84,7 +115,7 @@
 - (UIView *)pageController:(SZPageController *)pageController viewForIndex:(NSInteger)index {
     TempView *view = [[TempView alloc] init];
     view.backgroundColor = ViewColor;
-    view.textLabel.text = [NSString stringWithFormat:@"%ld", (long)index];
+    view.model = self.dataArray[index];
     return view;
 }
 
@@ -95,6 +126,7 @@
 
 - (void)pageController:(SZPageController *)pageController currentView:(UIView *)currentView currentIndex:(NSInteger)currentIndex {
     NSLog(@"%@ __ %ld", currentView, currentIndex);
+    self.index = currentIndex;
 }
 
 - (void)pageControllerDidSwitchToFirst:(SZPageController *)pageController {
@@ -103,8 +135,6 @@
 
 - (void)pageControllerDidSwitchToLast:(SZPageController *)pageController {
     NSLog(@"最后一个");
-    self.numbers += 3;
-    [self.pageController reloadData];
 }
 
 - (void)pageControllerSwitchToLastDisabled:(SZPageController *)pageController {
@@ -113,8 +143,6 @@
 
 - (void)pageControllerSwitchToNextDisabled:(SZPageController *)pageController {
     NSLog(@"不能再向后了");
-    self.numbers += 3;
-    [self.pageController reloadData];
 }
 
 - (void)dealloc {

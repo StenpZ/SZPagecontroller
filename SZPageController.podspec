@@ -1,7 +1,7 @@
 Pod::Spec.new do |s|
 
 s.name         = "SZPageController"
-s.version      = "1.0.2"
+s.version      = "1.0.3"
 s.summary      = "类似驾考宝典和小说阅读器覆盖翻页的控件."
 
 s.description  = <<-DESC

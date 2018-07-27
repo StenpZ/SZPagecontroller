@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006B10E920F74B6800BFF278 /* DemoModel.m in Sources */ = {isa = PBXBuildFile; fileRef = 006B10E820F74B6800BFF278 /* DemoModel.m */; };
 		0088B08C1EC81D120067E465 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 0088B08B1EC81D120067E465 /* main.m */; };
 		0088B08F1EC81D120067E465 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 0088B08E1EC81D120067E465 /* AppDelegate.m */; };
 		0088B0921EC81D120067E465 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 0088B0911EC81D120067E465 /* ViewController.m */; };
@@ -20,6 +21,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		006B10E720F74B6800BFF278 /* DemoModel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DemoModel.h; sourceTree = "<group>"; };
+		006B10E820F74B6800BFF278 /* DemoModel.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DemoModel.m; sourceTree = "<group>"; };
 		0088B0871EC81D120067E465 /* SZPageControllerDemo.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SZPageControllerDemo.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0088B08B1EC81D120067E465 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		0088B08D1EC81D120067E465 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -84,6 +87,8 @@
 				0088B0A91EC81E220067E465 /* TempViewController.m */,
 				0088B0AB1EC81E390067E465 /* TempView.h */,
 				0088B0AC1EC81E390067E465 /* TempView.m */,
+				006B10E720F74B6800BFF278 /* DemoModel.h */,
+				006B10E820F74B6800BFF278 /* DemoModel.m */,
 			);
 			path = SZPageControllerDemo;
 			sourceTree = "<group>";
@@ -182,6 +187,7 @@
 				0088B08F1EC81D120067E465 /* AppDelegate.m in Sources */,
 				0088B0AA1EC81E220067E465 /* TempViewController.m in Sources */,
 				0088B0A41EC81D690067E465 /* UIView+SZPageController.m in Sources */,
+				006B10E920F74B6800BFF278 /* DemoModel.m in Sources */,
 				0088B0AD1EC81E390067E465 /* TempView.m in Sources */,
 				0088B08C1EC81D120067E465 /* main.m in Sources */,
 				0088B0A71EC81D8B0067E465 /* SZPageController.m in Sources */,

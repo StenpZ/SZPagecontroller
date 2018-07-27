@@ -817,6 +817,12 @@
     if (self.currentIndex == index) {
         return;
     }
+    if (index >= self.numberOfPages) {
+        return;
+    }
+    if (index < 0) {
+        return;
+    }
     self.isAnimating = animated;
     self.isLeft = index < self.currentIndex ? YES: NO;
     self.currentIndex = index;
@@ -832,6 +838,14 @@
             [self initView];
         }
     }
+}
+
+- (void)switchToNextAnimated:(BOOL)animated {
+    [self switchToIndex:self.currentIndex + 1 animated:animated];
+}
+
+- (void)switchToLastAnimated:(BOOL)animated {
+    [self switchToIndex:self.currentIndex - 1 animated:animated];
 }
 
 - (void)adjustedWhenReadWithCurrentIndex:(NSInteger)currentIndex sumPages:(NSInteger)sumPages {

@@ -182,12 +182,26 @@
 - (BOOL)canSwitchToIndex:(NSInteger)index;
 
 /**
- 切换到某一页 需要先做判断 即先调用canSwitchToIndex:index 否则可能发生崩溃
+ 切换到某一页
 
  @param index 某一页索引
  @param animated 是否需要动画效果
  */
 - (void)switchToIndex:(NSInteger)index animated:(BOOL)animated;
+
+/**
+ 切换到下一页
+
+ @param animated 是否需要动画效果
+ */
+- (void)switchToNextAnimated:(BOOL)animated;
+
+/**
+ 切换到上一页
+
+ @param animated 是否需要动画效果
+ */
+- (void)switchToLastAnimated:(BOOL)animated;
 
 /**
  小说阅读时由于字体、间距等的改变导致页面位置和总页数发生变化时可调用此接口进行适配(常规使用建议不要用改方法)
